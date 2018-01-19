@@ -1,0 +1,21 @@
+{
+  "name": "socket",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "bottlejs": "^1.6.3",
+    "inversify": "^4.9.0",
+    "mysql": "^2.15.0",
+    "net": "^1.0.2",
+    "reflect-metadata": "^0.1.10"
+  },
+  "devDependencies": {
+    "@types/node": "^8.5.2"
+  },
+  "scripts": {
+    "build": "tsc --outDir ./src"
+  },
+  "author": "",
+  "license": "ISC"
+}

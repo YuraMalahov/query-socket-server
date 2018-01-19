@@ -1,0 +1,16 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+require("reflect-metadata");
+var inversify_1 = require("inversify");
+var interfaces_1 = require("./data-transformers/interfaces");
+var query_1 = require("./data-transformers/query");
+var interfaces_2 = require("./socket/interfaces");
+var client_1 = require("./socket/client");
+var broadcast_1 = require("./socket/broadcast");
+var app_1 = require("./kernel/app");
+var appContainer = new inversify_1.Container();
+exports.appContainer = appContainer;
+appContainer.bind(interfaces_1.TYPES.DataTransformer).to(query_1.QueryTransformer).inSingletonScope();
+appContainer.bind(interfaces_2.TYPES.Client).to(client_1.Client).inSingletonScope();
+appContainer.bind(interfaces_2.TYPES.Broadcast).to(broadcast_1.Broadcast).inSingletonScope();
+appContainer.bind(app_1.TYPES.App).to(app_1.App).inSingletonScope();
