@@ -7,16 +7,20 @@ class RequestHandler {
     
   }
   
-  public handle(data: Buffer): any
+  public handle(data: Buffer, callback: Function)
   {
     let request = this._dataTransformer.decode(data);
     let controller = this._controllerResolver.resolve(request);
-    let response = controller.handle(request).getBody();
-    let stringResponse = [];
-    Object.keys(response).forEach((key: string) => {
-      stringResponse.push(key + "=" + response[key]);
+    // async
+    controller.handle(request, (error, response) => {
+      let responseBody = response.getBody();
+      let stringResponse = [];
+      Object.keys(responseBody).forEach((key: string) => {
+        stringResponse.push(key + "=" + responseBody[key]);
+      });
+
+      callback(null, stringResponse.join("&"));
     });
-    return stringResponse.join("&");
   }
 }
 

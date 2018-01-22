@@ -22,16 +22,18 @@ class App
     // Handle incoming messages from clients.
     socket.on('data', (data: Buffer) => {
       this._broadcast.send(socket.remoteAddress + "> " + data, socket);
-      try {
-        let response = this._requestHandler.handle(data);
+      this._requestHandler.handle(data, (exception, response) => {
+        if (exception) {
+          if(exception instanceof Exception) {
+            socket.write(exception.getCode().toString());
+          }
+          console.error(exception);
+          return;
+        }
+
         socket.write(response.toString());
         socket.write("\n\r");
-      } catch (exception) {
-        if(exception instanceof Exception) {
-          socket.write(exception.getCode().toString());
-        }
-        console.error(exception);
-      }
+      });
     });
     
     // Remove the client from the list when it leaves

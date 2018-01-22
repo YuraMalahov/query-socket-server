@@ -1,14 +1,17 @@
 import { ControllerInterface } from "../kernel/controller";
 import { Request } from "../data-transformers/request";
 import { Response } from "../data-transformers/response";
+import { setTimeout } from "timers";
 
 class HelloController extends ControllerInterface {
-  public handle(request: Request): Response {
+  public handle(request: Request, callback: Function) {
     let response = new Response();
-    var waitTill = new Date(new Date().getTime() + 5 * 1000);
-    while(waitTill > new Date()){}
-    response.addItem("shit", "happens");
-    return response;
+    
+    // wait 5 sec
+    setTimeout(()=> {
+      response.addItem("shit", "happens");
+      callback(null, response);
+    }, 5000);    
   }
 }
 

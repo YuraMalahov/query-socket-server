@@ -2,9 +2,7 @@ import { Request } from "../data-transformers/request";
 import { Response } from "../data-transformers/response";
 
 class ControllerInterface {
-  public handle(request: Request): Response {
-    return new Response();
-  }
+  public handle(request: Request, callback: Function) {}
 }
 
 export { ControllerInterface }
